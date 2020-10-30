@@ -15,12 +15,24 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.deepOrange, // 앱의 전체적인 테마 색상 지정
       ),
-      home: Scaffold( // Scaffold 속성의 추가를 통해 AppBar, Title 등의 형식 지정가능
-          appBar: AppBar( // 최상단 타이틀이 노출되는 부분. 하위 title 메소드의 내용이 표시됨
-            title : Text('title in AppBar'),
-          ),
-          body: Text('헬로월드')) // 흰 배경 본문 부분
+      home: HelloPage('Hello World')
     );
   }
 }
 
+class HelloPage extends StatefulWidget { // 상태를 가질 수 있는 클래스
+  final String title;
+  HelloPage(this.title);
+
+  @override
+  _HelloPageState createState() => _HelloPageState();
+}
+
+class _HelloPageState extends State<HelloPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: AppBar(
+      title: Text(widget.title)
+    ),body: Text(widget.title, style: TextStyle(fontSize: 30)));
+  }
+}
