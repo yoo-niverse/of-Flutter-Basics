@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
 
         primarySwatch: Colors.deepOrange, // 앱의 전체적인 테마 색상 지정
       ),
-      home: HelloPage('Hello World')
+      home: HelloPage('Hello Worl2d')
     );
   }
 }
@@ -29,10 +29,23 @@ class HelloPage extends StatefulWidget { // 상태를 가질 수 있는 클래�
 }
 
 class _HelloPageState extends State<HelloPage> {
+  String _message = 'Hello World';
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(
+    return Scaffold(
+      floatingActionButton:
+          FloatingActionButton(
+              child: Icon(Icons.camera),
+              onPressed: _changeMessage),
+        appBar: AppBar(
       title: Text(widget.title)
-    ),body: Text(widget.title, style: TextStyle(fontSize: 30)));
+    ), body: Text(_message, style: TextStyle(fontSize: 30)));
+  }
+
+  void _changeMessage() {
+    setState(() {
+      _message = '헬로 월드';
+    });
   }
 }
