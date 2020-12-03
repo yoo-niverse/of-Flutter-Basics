@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:insta_clon/AccountPage.dart';
 import 'package:insta_clon/HomePage.dart';
+import 'package:insta_clon/SearchPage.dart';
 
 class TabPage extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class _TabPageState extends State<TabPage> {
   int _selectedIndex = 0; // 현재 상태(페이지)를 가질 수 있는 변수
   List _pages = [
     HomePage(),
-    Text('page2'),
+    SearchPage(),
     AccountPage()
   ]; // 버튼별(인덱스별)로 다른 화면을 갖도록 테스트하기 위한 리스트
 
