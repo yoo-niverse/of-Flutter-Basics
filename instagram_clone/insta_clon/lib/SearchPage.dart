@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_clon/CreatePage.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -9,8 +10,13 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: null,
-      child: Icon(Icons.create),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+          MaterialPageRoute(builder: (context) => CreatePage()));
+          },
+
+        child: Icon(Icons.create),
         backgroundColor: Colors.lightBlue,
       ),
 
