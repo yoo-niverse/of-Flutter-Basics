@@ -22,8 +22,11 @@ class LoginPage extends StatelessWidget {
             SignInButton(Buttons.GoogleDark,
               onPressed: () {
               _handleSignIn().then((user) {
+                print(user);
+                // 로그인 버튼을 눌렀을 때 _handleSignIn 메소드 호출
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => TabPage(user)));// await 대신 비동기화 하기위해 then 메소드 사용
+                    MaterialPageRoute(builder: (context) => TabPage(user)));
+                // await 대신 비동기화 하기위해 then 메소드 사용
 
               });
               },
@@ -37,6 +40,7 @@ class LoginPage extends StatelessWidget {
   }
 
   Future<FirebaseUser> _handleSignIn() async {
+    // _handleSignIn 메소드를 비동기 함수로 만들기 위해 Future형 반환, async 설정
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
     FirebaseUser user = await _auth.signInWithCredential(
