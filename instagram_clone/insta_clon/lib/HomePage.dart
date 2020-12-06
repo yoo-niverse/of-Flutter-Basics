@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
+  final FirebaseUser user;
+  HomePage(this.user); // TabPage로 부터 받은 User
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,12 +44,15 @@ class HomePage extends StatelessWidget {
                               width: 80.0,
                               height: 80.0,
                               child: CircleAvatar( // 네트워크 이미지를 넣기위해 원형 이미지틀 위젯 삽입
-                                backgroundImage: NetworkImage('https://scontent-ssn1-1.cdninstagram.com/v/t51.2885-19/s150x150/126348204_385375592906927_506130299603221814_n.jpg?_nc_ht=scontent-ssn1-1.cdninstagram.com&_nc_ohc=fij9lqfq02IAX-ZsS5m&tp=1&oh=be07cf413fb87ec481bf43c3dcaa4104&oe=5FEE089F'),
+                                backgroundImage: NetworkImage(user.photoUrl),
+                                // 로그인된 구글 계정의 프로필 이미지를 받아오기 위하여 user.photoUrl 이용
                               ),
                             ),
-                            Text('이메일 주소', style: TextStyle(fontWeight: FontWeight.bold),),
+                            Text(user.email, style: TextStyle(fontWeight: FontWeight.bold),),
+                              // 로그인된 계정의 이메일 주소를 받아오기 위하여 user.email 사용
                             Padding(padding: EdgeInsets.all(8.0)),
-                            Text('윤송'),
+                            Text(user.displayName),
+                              // 로그인된 계정의 이름을 표시하기 위해 user.displayName 사용
                             Padding(padding: EdgeInsets.all(8.0)),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,

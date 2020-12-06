@@ -14,11 +14,17 @@ class TabPage extends StatefulWidget {
 
 class _TabPageState extends State<TabPage> {
   int _selectedIndex = 0; // 현재 상태(페이지)를 가질 수 있는 변수
-  List _pages = [
-    HomePage(),
-    SearchPage(),
-    AccountPage()
-  ]; // 버튼별(인덱스별)로 다른 화면을 갖도록 테스트하기 위한 리스트
+  List _pages; // 여기에서 _pages에 user정보 전달하면 에러 발생
+
+  @override
+  void initState() { // 생성자 다음에 호출되는 메소드로 리스트 초기화
+    super.initState();
+    _pages = [
+      HomePage(widget.user), // user 정보를 HomePage에 전달
+      SearchPage(widget.user),
+      AccountPage(widget.user)
+    ]; // 버튼별(인덱스별)로 다른 화면을 갖도록 테스트하기 위한 리스트
+  }
 
   @override
   Widget build(BuildContext context) {

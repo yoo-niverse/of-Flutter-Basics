@@ -43,10 +43,10 @@ class LoginPage extends StatelessWidget {
     // _handleSignIn 메소드를 비동기 함수로 만들기 위해 Future형 반환, async 설정
     GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    FirebaseUser user = await _auth.signInWithCredential(
+    FirebaseUser user = (await _auth.signInWithCredential(
       GoogleAuthProvider.getCredential(idToken: googleAuth.idToken,
-          accessToken: googleAuth.accessToken)
-    );
+          accessToken: googleAuth.accessToken))).user;
+
   }
 }
 

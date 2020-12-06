@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AccountPage extends StatefulWidget {
   @override
   _AccountPageState createState() => _AccountPageState();
+
+  final FirebaseUser user;
+  AccountPage(this.user);
 }
 class _AccountPageState extends State<AccountPage> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  int _postCount = 0; // 게시글 수 반영을 위한 변수
+  @override
+  void initState() {
+    super.initState();
+    Firestore.instance.collection('post').where('email', isEqualTo: widget.user.email)
+      //  컬렉션 'post' 이하에 있는 것의 이메일과 내 이메일이 일치한다면
+      .getDocuments()
+      .then((snapShot) {
+        setState(() {
+          _postCount = snapShot.documents.length; // snapShot 개수를 가져와서 할당
+        });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +65,8 @@ class _AccountPageState extends State<AccountPage> {
                       width: 80.0,
                       height: 80.0,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage('https://bit.ly/2JsEkgP')
+                        backgroundImage: NetworkImage(widget.user.photoUrl)
+                            // 로그인된 계정에서 받아온 이미지 사용
                       ),
                     ),
                     Container( // 플로팅 아이콘을 자유롭게 정렬하기 위해 Container에 담음
@@ -65,11 +84,11 @@ class _AccountPageState extends State<AccountPage> {
                   ],
                 ),
                 Padding(padding: EdgeInsets.all(8.0)),
-                Text('최윤성',
+                Text(widget.user.displayName, // 로그인된 계정에서 받아온 이름 사용
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),)
               ],
             ),
-            Text('0\n게시물', textAlign: TextAlign.center, style: TextStyle(fontSize: 18.0)),
+            Text('$_postCount\n게시물', textAlign: TextAlign.center, style: TextStyle(fontSize: 18.0)),
             Text('0\n팔로워', textAlign: TextAlign.center, style: TextStyle(fontSize: 18.0)),
             Text('0\n팔로잉', textAlign: TextAlign.center, style: TextStyle(fontSize: 18.0)),
           ],
@@ -77,3 +96,4 @@ class _AccountPageState extends State<AccountPage> {
     );
  }
 }
+
